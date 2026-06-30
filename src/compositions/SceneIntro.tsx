@@ -1,4 +1,11 @@
-import { AbsoluteFill, Audio, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { CriticalThinkingIllustration } from "../components/CriticalThinkingIllustration";
+import { ProblemSolvingIllustration } from "../components/ProblemSolvingIllustration";
+import { InformationIllustration } from "../components/InformationIllustration";
+import { WayHandleIllustration } from "../components/WayHandleIllustration";
+import { MindsetIllustration } from "../components/MindsetIllustration";
+import { MethodIllustration } from "../components/MethodIllustration";
+import { ToolkitIllustration } from "../components/ToolkitIllustration";
 import { loadFont } from "@remotion/google-fonts/Nunito";
 
 const { fontFamily } = loadFont();
@@ -67,7 +74,7 @@ const BgCircles: React.FC<{ frame: number }> = ({ frame }) => {
           cy={c.cy + drift(c.seed + 1)}
           r={c.r}
           fill="none"
-          stroke="#FFFFFF"
+          stroke="#1A1A1A"
           strokeWidth={1.5}
           opacity={0.04}
         />
@@ -77,118 +84,9 @@ const BgCircles: React.FC<{ frame: number }> = ({ frame }) => {
 };
 
 
-// ── SVG: Inbox overflowing ───────────────────────────────────────────────────
-const InboxSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={240} height={200} viewBox="0 0 240 200">
-      {/* tray */}
-      <rect x={20} y={120} width={200} height={60} rx={4} fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={520} strokeDashoffset={d(520)} />
-      {/* documents */}
-      {[0, 1, 2, 3].map((i) => (
-        <rect key={i} x={40 + i * 48} y={80 - i * 14} width={36} height={48} rx={2}
-          fill="none" stroke="#FF8300" strokeWidth={2.5}
-          strokeDasharray={168} strokeDashoffset={d(168)} />
-      ))}
-    </svg>
-  );
-};
 
-// ── SVG: Compass ─────────────────────────────────────────────────────────────
-const CompassSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={200} height={200} viewBox="0 0 200 200">
-      <circle cx={100} cy={100} r={80} fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={502} strokeDashoffset={d(502)} />
-      <circle cx={100} cy={100} r={8} fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={50} strokeDashoffset={d(50)} />
-      <line x1={100} y1={30} x2={100} y2={170} stroke="#FF8300" strokeWidth={2} opacity={0.5}
-        strokeDasharray={140} strokeDashoffset={d(140)} />
-      <line x1={30} y1={100} x2={170} y2={100} stroke="#FF8300" strokeWidth={2} opacity={0.5}
-        strokeDasharray={140} strokeDashoffset={d(140)} />
-    </svg>
-  );
-};
 
-// ── SVG: Map grid ─────────────────────────────────────────────────────────────
-const MapSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={200} height={200} viewBox="0 0 200 200">
-      {[0, 1].map((row) =>
-        [0, 1].map((col) => (
-          <rect key={`${row}-${col}`}
-            x={30 + col * 85} y={30 + row * 85} width={70} height={70} rx={6}
-            fill="none" stroke="#FF8300" strokeWidth={3}
-            strokeDasharray={280} strokeDashoffset={d(280)} />
-        ))
-      )}
-    </svg>
-  );
-};
 
-// ── SVG: Lightbulb ────────────────────────────────────────────────────────────
-const LightbulbSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={120} height={140} viewBox="0 0 120 140">
-      <path d="M60 10 C30 10 10 30 10 55 C10 75 25 90 35 100 L35 115 L85 115 L85 100 C95 90 110 75 110 55 C110 30 90 10 60 10 Z"
-        fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={500} strokeDashoffset={d(500)} />
-      <line x1={40} y1={115} x2={80} y2={115} stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={40} strokeDashoffset={d(40)} />
-      <line x1={42} y1={125} x2={78} y2={125} stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={36} strokeDashoffset={d(36)} />
-    </svg>
-  );
-};
-
-// ── SVG: 6 dots ───────────────────────────────────────────────────────────────
-const SixDotsSVG: React.FC<{ scale: number }> = ({ scale }) => (
-  <svg width={140} height={100} viewBox="0 0 140 100"
-    style={{ transform: `scale(${scale})`, transformOrigin: "center" }}>
-    {[0, 1, 2].map((col) =>
-      [0, 1].map((row) => (
-        <circle key={`${row}-${col}`}
-          cx={25 + col * 45} cy={20 + row * 45} r={14}
-          fill="none" stroke="#FF8300" strokeWidth={3} />
-      ))
-    )}
-  </svg>
-);
-
-// ── SVG: Wrench ───────────────────────────────────────────────────────────────
-const WrenchSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={120} height={140} viewBox="0 0 120 140">
-      <path d="M80 10 C95 25 95 45 80 55 L35 110 C28 118 18 118 12 110 C6 102 6 92 14 86 L70 40 C80 25 65 8 80 10 Z"
-        fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={600} strokeDashoffset={d(600)} />
-      <circle cx={22} cy={104} r={8} fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={50} strokeDashoffset={d(50)} />
-    </svg>
-  );
-};
-
-// ── SVG: Briefcase ────────────────────────────────────────────────────────────
-const BriefcaseSVG: React.FC<{ progress: number }> = ({ progress }) => {
-  const d = (len: number) => len * (1 - progress);
-  return (
-    <svg width={140} height={120} viewBox="0 0 140 120">
-      <rect x={10} y={35} width={120} height={80} rx={6}
-        fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={400} strokeDashoffset={d(400)} />
-      <path d="M45 35 L45 20 C45 14 95 14 95 20 L95 35"
-        fill="none" stroke="#FF8300" strokeWidth={3}
-        strokeDasharray={130} strokeDashoffset={d(130)} />
-      <line x1={10} y1={75} x2={130} y2={75} stroke="#FF8300" strokeWidth={2} opacity={0.5}
-        strokeDasharray={120} strokeDashoffset={d(120)} />
-    </svg>
-  );
-};
 
 // ── Main component ────────────────────────────────────────────────────────────
 export const SceneIntro: React.FC = () => {
@@ -198,23 +96,36 @@ export const SceneIntro: React.FC = () => {
   const sp = (f: number, cfg?: object) =>
     spring({ frame: frame - f, fps, config: { damping: 14, ...cfg } });
 
-  // ── Phase 1: 0–118 ──────────────────────────────────────────────────────────
+  // ── Phase 1: 0–145 ──────────────────────────────────────────────────────────
   const moduleOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-  const titleProgress = sp(10);
-  const titleY = interpolate(titleProgress, [0, 1], [50, 0]);
-  const subtitleProgress = sp(25);
-  const subtitleY = interpolate(subtitleProgress, [0, 1], [50, 0]);
 
-  const illustrationProgress = sp(10, { damping: 18 });
+  // ── Phase 1A: Critical Thinking — starts ~frame 43 (audio: "Critical Thinking") ──
+  // "Welcome to Module 2," ≈ 1.4s = 42 frames; "Critical" starts at frame 43
+  const wCritical = sp(43);
+  const wThinking = sp(50);
+
+  // CT illustration entrance — same delay as text
+  const illustrationProgress = sp(43, { damping: 18 });
   const illustrationScale = interpolate(illustrationProgress, [0, 1], [0.82, 1]);
-  const illustrationOpacity = interpolate(illustrationProgress, [0, 1], [0, 1]);
+  const illustrationOpacity = interpolate(illustrationProgress, [0, 0.2], [0, 1], { extrapolateRight: "clamp" });
 
-  // ── Phase 1 illustration motion ─────────────────────────────────────────────
+  // CT exit: slide left + fade when "and" is spoken (~frame 67)
+  const ctExitProg = interpolate(frame, [67, 85], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const ctSlideX = interpolate(ctExitProg, [0, 1], [0, -200]);
+  const ctExitOp = interpolate(ctExitProg, [0, 1], [1, 0]);
+
+  // ── Phase 1B: Problem Solving — starts ~frame 67 (audio: "and Problem Solving") ──
+  const wProblem = sp(75);
+  const wSolving = sp(83);
+
+  // PS enter: slide in from right when "and Problem Solving" starts
+  const psEnterProg = interpolate(frame, [65, 85], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const psEnterX = interpolate(psEnterProg, [0, 1], [220, 0]);
+  const psEnterOp = interpolate(psEnterProg, [0, 1], [0, 1]);
+
+
+  // ── Phase 1 illustration float ───────────────────────────────────────────────
   const illustrationFloat = Math.sin(frame / 55) * 10;
-  const illustrationPulse = 1 + Math.sin(frame / 40) * 0.015;
-  const ringProgress = interpolate(frame, [10, 80], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const ringDash = 1130; // circumference ~2π*180
-  const ringOffset = ringDash * (1 - ringProgress);
 
   // ── Phase 1 → 2 transition ──────────────────────────────────────────────────
   const phase1ScaleProgress = interpolate(frame, [140, 170], [1, 0.6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -222,76 +133,91 @@ export const SceneIntro: React.FC = () => {
   const phase1YProgress = interpolate(frame, [140, 170], [300, 60], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Phase 2: 160–342 ────────────────────────────────────────────────────────
-  const inboxVisible = frame >= 160;
-  const inboxDrawProgress = interpolate(frame, [160, 220], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const infoProgress = sp(230);
+  const infoProgress = sp(200);
   const infoY = interpolate(infoProgress, [0, 1], [30, 0]);
   const infoOpacity = interpolate(infoProgress, [0, 1], [0, 1]);
-  const problemProgress = sp(274);
-  const problemY = interpolate(problemProgress, [0, 1], [30, 0]);
-  const problemOpacity = interpolate(problemProgress, [0, 1], [0, 1]);
 
   // ── Phase 2 → 3 transition ──────────────────────────────────────────────────
   const phase2Opacity = interpolate(frame, [350, 375], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Phase 3: 371–509 ────────────────────────────────────────────────────────
-  const compassVisible = frame >= 380;
-  const compassDrawProgress = interpolate(frame, [380, 440], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const calmProgress = sp(450);
-  const calmOpacity = interpolate(calmProgress, [0, 1], [0, 1]);
-  const calmY = interpolate(calmProgress, [0, 1], [30, 0]);
 
   // ── Phase 3 → 4 transition ──────────────────────────────────────────────────
   const phase3Opacity = interpolate(frame, [520, 548], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Phase 4: 548–638 ────────────────────────────────────────────────────────
-  const mapVisible = frame >= 548;
-  const mapDrawProgress = interpolate(frame, [548, 590], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const sectionsProgress = sp(618, { damping: 10 });
   const sectionsScale = interpolate(sectionsProgress, [0, 1], [0.5, 1]);
   const sectionsOpacity = interpolate(sectionsProgress, [0, 1], [0, 1]);
 
-  const placeholderCircles = [0, 1, 2, 3].map((i) => {
-    const prog = sp(615 + i * 8);
-    return interpolate(prog, [0, 1], [0, 1]);
-  });
-
-  // ── Phase 5: section cards 667–1180 ─────────────────────────────────────────
-  const sec1Visible = frame >= 667;
-  const sec1DrawProg = interpolate(frame, [667, 710], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  const sec2Visible = frame >= 799;
-  const sec2ScaleProg = sp(799);
-  const sec2Scale = interpolate(sec2ScaleProg, [0, 1], [0, 1]);
-
-  const sec3Visible = frame >= 962;
-  const sec3DrawProg = interpolate(frame, [962, 1000], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  const sec4Visible = frame >= 1109;
-  const sec4DrawProg = interpolate(frame, [1109, 1160], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  // label springs for each section
-  const sec1LabelProg = sp(720);
-  const sec1LabelY = interpolate(sec1LabelProg, [0, 1], [30, 0]);
-  const sec1LabelOp = interpolate(sec1LabelProg, [0, 1], [0, 1]);
-  const sec2LabelProg = sp(840);
-  const sec2LabelY = interpolate(sec2LabelProg, [0, 1], [30, 0]);
-  const sec2LabelOp = interpolate(sec2LabelProg, [0, 1], [0, 1]);
-  const sec3LabelProg = sp(1010);
-  const sec3LabelY = interpolate(sec3LabelProg, [0, 1], [30, 0]);
-  const sec3LabelOp = interpolate(sec3LabelProg, [0, 1], [0, 1]);
-  const sec4LabelProg = sp(1170);
-  const sec4LabelY = interpolate(sec4LabelProg, [0, 1], [30, 0]);
-  const sec4LabelOp = interpolate(sec4LabelProg, [0, 1], [0, 1]);
+  // "4 Sections" moves up-left when first section card appears
+  const sectionsMoveProgress = sp(667, { damping: 14 });
+  const sectionsMoveX = interpolate(sectionsMoveProgress, [0, 1], [0, -400]);
+  const sectionsMoveY = interpolate(sectionsMoveProgress, [0, 1], [0, -250]);
 
   // Section card x positions (centered for 4 cards, 200px wide, 60px gap)
   // total width = 4*200 + 3*60 = 980, start = (1920-980)/2 = 470
   const cardPositions = [470, 730, 990, 1250];
 
-  // ── Phase 6: 1268–1334 ───────────────────────────────────────────────────────
-  const lineProgress = sp(1268);
-  const lineWidth = interpolate(lineProgress, [0, 1], [0, 500]);
-  const beginOpacity = interpolate(frame, [1290, 1310], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ── Phase 5: section cards 667–1180 ─────────────────────────────────────────
+  const sec1Visible = frame >= 667;
+
+  // Mindset:
+  //   f667–774: appears large on right side (fixed)
+  //   f775+:    spring slides to card position [0] on left, shrinks
+  //   f810+:    "Mindset" text fades in after arriving
+  const mindsetEnterOp = interpolate(frame, [667, 680], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const mindsetSlideProg = spring({ frame: frame - 775, fps, config: { damping: 18, stiffness: 70 } });
+  const mindsetX = interpolate(mindsetSlideProg, [0, 1], [1170, cardPositions[0]]);
+  const mindsetY = interpolate(mindsetSlideProg, [0, 1], [270, 420]);
+  const mindsetW = interpolate(mindsetSlideProg, [0, 1], [540, 200]);
+  const mindsetTextOp = interpolate(frame, [810, 830], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  const sec2Visible = frame >= 799;
+
+  // Method: f799–876 large right, f877+ slides to card[1]
+  const methodEnterOp = interpolate(frame, [799, 812], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const methodSlideProg = spring({ frame: frame - 877, fps, config: { damping: 18, stiffness: 70 } });
+  const methodX = interpolate(methodSlideProg, [0, 1], [1170, cardPositions[1]]);
+  const methodY = interpolate(methodSlideProg, [0, 1], [270, 420]);
+  const methodW = interpolate(methodSlideProg, [0, 1], [540, 200]);
+  const methodTextOp = interpolate(frame, [900, 920], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  const sec3Visible = frame >= 962;
+
+  // Toolkit: f962–1033 large right, f1034+ slides to card[2]
+  const toolkitEnterOp = interpolate(frame, [962, 975], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const toolkitSlideProg = spring({ frame: frame - 1034, fps, config: { damping: 18, stiffness: 70 } });
+  const toolkitX = interpolate(toolkitSlideProg, [0, 1], [1170, cardPositions[2]]);
+  const toolkitY = interpolate(toolkitSlideProg, [0, 1], [270, 420]);
+  const toolkitW = interpolate(toolkitSlideProg, [0, 1], [540, 200]);
+  const toolkitTextOp = interpolate(frame, [1060, 1080], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Fade out sec1/2/3 + "4 Sections" text when Real Case takes over
+  const prevSectionsFadeOp = interpolate(frame, [1109, 1125], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Real Case: 3 assets orbiting at center of screen, spring-scale entrance
+  const sec4Visible = frame >= 1109;
+  const rcSpringProg = spring({ frame: frame - 1109, fps, config: { damping: 14, stiffness: 80 } });
+  const rcScale = interpolate(rcSpringProg, [0, 1], [0, 1]);
+  const rcEnterOp = interpolate(frame, [1109, 1125, 1252, 1268], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const rcContainerSize = 500;
+  const rcAssetW = 130;
+  const rcRadius = 150;
+  const rcTextOp = interpolate(frame, [1145, 1165], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const rcRotRad = ((frame - 1109) * 0.35 * Math.PI) / 180;
+  const rcCx = rcContainerSize / 2;
+  const rcCy = rcContainerSize / 2;
+  const rcPoints = [0, 1, 2].map(i => {
+    const angle = rcRotRad + (i * 2 * Math.PI) / 3 - Math.PI / 2;
+    return { x: rcCx + rcRadius * Math.cos(angle), y: rcCy + rcRadius * Math.sin(angle) };
+  });
+
+  // ── Phase 6: 1268–1334 — "Let's start!" per-character drop-in ──────────────
+  // Delays matched to audio "Let's start at the very beginning."
+  // "Let's" ≈ 7 frames, gap, "start" ≈ 8 frames, "!" emphasis delay
+  const letsStartChars = ["L","e","t","'","s"," ","s","t","a","r","t","!"];
+  const letsStartDelays = [0, 3, 5, 6, 7, 12, 14, 16, 18, 20, 22, 30];
 
   // Phase 1 visible: frames 0–170 (transitions out)
   const phase1Visible = frame < 370;
@@ -303,13 +229,13 @@ export const SceneIntro: React.FC = () => {
   const phase4Visible = frame >= 548;
 
   return (
-    <AbsoluteFill style={{ background: "#1A1A1A", fontFamily }}>
+    <AbsoluteFill style={{ background: "#EAEDF5", fontFamily }}>
       <Audio src={staticFile("audio/intro.mp3")} volume={1} />
 
       {/* Background circles */}
       <BgCircles frame={frame} />
 
-      {/* ── PHASE 1 ── */}
+      {/* ── PHASE 1 — MODULE 2 badge (collapses at 140–170) ── */}
       {phase1Visible && (
         <div
           style={{
@@ -321,14 +247,11 @@ export const SceneIntro: React.FC = () => {
             transformOrigin: "top left",
           }}
         >
-          {/* MODULE 2 label */}
           <div
             style={{
               position: frame >= 140 ? "relative" : "absolute",
-              top: frame >= 140 ? 0 : 60,
-              left: 0,
-              right: frame >= 140 ? undefined : 0,
-              textAlign: "center",
+              top: frame >= 140 ? 0 : 160,
+              left: frame >= 140 ? 0 : 140,
               fontFamily,
               fontSize: 28,
               fontWeight: 400,
@@ -340,125 +263,129 @@ export const SceneIntro: React.FC = () => {
           >
             MODULE 2
           </div>
-
-          {/* Critical Thinking */}
-          {frame < 140 && (
-            <>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 400,
-                  left: 0,
-                  right: 0,
-                  textAlign: "center",
-                  fontFamily,
-                  fontSize: 96,
-                  fontWeight: 900,
-                  color: "#FFFFFF",
-                  transform: `translateY(${titleY}px)`,
-                  opacity: titleProgress,
-                }}
-              >
-                Critical Thinking
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  top: 510,
-                  left: 0,
-                  right: 0,
-                  textAlign: "center",
-                  fontFamily,
-                  fontSize: 96,
-                  fontWeight: 900,
-                  color: "#FF8300",
-                  transform: `translateY(${subtitleY}px)`,
-                  opacity: subtitleProgress,
-                }}
-              >
-                & Problem Solving
-              </div>
-            </>
-          )}
         </div>
       )}
 
-      {/* Critical thinking illustration — phase 1 only */}
-      {phase1Visible && frame < 370 && (
-        <div
-          style={{
-            position: "absolute",
-            left: "50%",
-            top: 560,
-            transform: `translateX(-50%) translateY(${illustrationFloat}px) scale(${illustrationScale * illustrationPulse})`,
-            transformOrigin: "top center",
-            opacity: illustrationOpacity,
-          }}
-        >
-          {/* Draw-on orange ring */}
-          <svg
-            width={440}
-            height={440}
-            viewBox="0 0 440 440"
-            style={{ position: "absolute", top: -20, left: -20, pointerEvents: "none" }}
+      {/* ── PHASE 1A: Critical Thinking (0→82) ── */}
+      {phase1Visible && (
+        <>
+          {/* CT text — centered in left half */}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              width: 960,
+              top: 490,
+              display: "flex",
+              justifyContent: "center",
+              gap: 24,
+              fontFamily,
+              fontSize: 88,
+              fontWeight: 900,
+              color: "#1A1A1A",
+              transform: `translateX(${ctSlideX}px)`,
+              opacity: ctExitOp,
+            }}
           >
-            <circle
-              cx={220}
-              cy={220}
-              r={195}
-              fill="none"
-              stroke="#FF8300"
-              strokeWidth={3}
-              strokeDasharray={ringDash}
-              strokeDashoffset={ringOffset}
-              strokeLinecap="round"
-              opacity={0.6}
-            />
-          </svg>
-          <Img
-            src={staticFile("assets/critical-thinking.svg")}
-            style={{ width: 400, height: 400 }}
-          />
-        </div>
+            <span style={{ opacity: wCritical, display: "inline-block", transform: `translateY(${interpolate(wCritical, [0, 1], [40, 0])}px)` }}>Critical</span>
+            <span style={{ opacity: wThinking, display: "inline-block", transform: `translateY(${interpolate(wThinking, [0, 1], [40, 0])}px)` }}>Thinking</span>
+          </div>
+
+          {/* CT illustration — centered in right half, larger */}
+          <div
+            style={{
+              position: "absolute",
+              left: 960,
+              width: 960,
+              top: 0,
+              height: 1080,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              transform: `translateY(${illustrationFloat}px) scale(${illustrationScale})`,
+              opacity: illustrationOpacity * ctExitOp,
+            }}
+          >
+            <CriticalThinkingIllustration width={960} />
+          </div>
+        </>
+      )}
+
+      {/* ── PHASE 1B: Problem Solving (65→145) ── */}
+      {frame >= 65 && frame < 145 && (
+        <>
+          {/* PS text — centered in left half, slides in from right */}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              width: 960,
+              top: 490,
+              display: "flex",
+              justifyContent: "center",
+              gap: 20,
+              fontFamily,
+              fontSize: 80,
+              fontWeight: 900,
+              color: "#FF8300",
+              transform: `translateX(${psEnterX}px)`,
+              opacity: psEnterOp,
+            }}
+          >
+            <span style={{ opacity: wProblem, display: "inline-block", transform: `translateY(${interpolate(wProblem, [0, 1], [40, 0])}px)` }}>Problem</span>
+            <span style={{ opacity: wSolving, display: "inline-block", transform: `translateY(${interpolate(wSolving, [0, 1], [40, 0])}px)` }}>Solving</span>
+          </div>
+
+          {/* PS SVG — centered in right half, slides in + springs to 1.3× */}
+          <div
+            style={{
+              position: "absolute",
+              left: 960,
+              width: 960,
+              top: 0,
+              height: 1080,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              transform: `translateX(${psEnterX}px)`,
+              opacity: psEnterOp,
+            }}
+          >
+            <ProblemSolvingIllustration width={960} startFrame={65} />
+          </div>
+        </>
       )}
 
       {/* ── PHASE 2 ── */}
       {phase2Visible && (
         <div style={{ opacity: frame >= 350 ? phase2Opacity : 1 }}>
-          {inboxVisible && (
-            <div style={{ position: "absolute", left: "50%", top: 320, transform: "translateX(-50%)" }}>
-              <InboxSVG progress={inboxDrawProgress} />
-            </div>
-          )}
+          {/* Information illustration — full screen centered */}
+          <div style={{
+            position: "absolute",
+            top: 0, left: 0,
+            width: 1920, height: 1080,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <InformationIllustration width={1080} startFrame={160} />
+          </div>
+
+          {/* "Information" keyword — top-right */}
           <div
             style={{
               position: "absolute",
-              left: 0, right: 0, top: 580,
-              textAlign: "center",
+              top: 80,
+              right: 120,
               fontFamily,
-              fontSize: 48,
-              fontWeight: 700,
-              color: "#FFFFFF",
+              fontSize: 72,
+              fontWeight: 900,
+              color: "#FF8300",
               opacity: infoOpacity,
               transform: `translateY(${infoY}px)`,
             }}
           >
             Information
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              left: 0, right: 0, top: 650,
-              textAlign: "center",
-              fontFamily,
-              fontSize: 48,
-              fontWeight: 700,
-              color: "#FF8300",
-              opacity: problemOpacity,
-              transform: `translateY(${problemY}px)`,
-            }}
-          >
-            Problems
           </div>
         </div>
       )}
@@ -466,145 +393,217 @@ export const SceneIntro: React.FC = () => {
       {/* ── PHASE 3 ── */}
       {phase3Visible && (
         <div style={{ opacity: frame >= 520 ? phase3Opacity : 1 }}>
-          {compassVisible && (
-            <div style={{ position: "absolute", left: "50%", top: 340, transform: "translateX(-50%)" }}>
-              <CompassSVG progress={compassDrawProgress} />
-            </div>
-          )}
-          <div
-            style={{
-              position: "absolute",
-              left: 0, right: 0, top: 590,
-              textAlign: "center",
-              fontFamily,
-              fontSize: 56,
-              fontWeight: 700,
-              color: "#FFFFFF",
-              opacity: calmOpacity,
-              transform: `translateY(${calmY}px)`,
-            }}
-          >
-            Calmly & Well
+          {/* WayHandle illustration — full screen centered */}
+          <div style={{
+            position: "absolute",
+            top: 0, left: 0,
+            width: 1920, height: 1080,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}>
+            <WayHandleIllustration width={1080} startFrame={371} />
           </div>
+
         </div>
       )}
 
       {/* ── PHASE 4 ── */}
       {phase4Visible && (
-        <>
-          {mapVisible && (
-            <div style={{ position: "absolute", left: "50%", top: 260, transform: "translateX(-50%)" }}>
-              <MapSVG progress={mapDrawProgress} />
-            </div>
-          )}
-          <div
-            style={{
-              position: "absolute",
-              left: 0, right: 0, top: 490,
-              textAlign: "center",
-              fontFamily,
-              fontSize: 64,
-              fontWeight: 900,
-              color: "#FF8300",
-              opacity: sectionsOpacity,
-              transform: `scale(${sectionsScale})`,
-            }}
-          >
-            4 Sections
-          </div>
-          {/* placeholder circles */}
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: 600,
-              transform: "translateX(-50%)",
-              display: "flex",
-              gap: 40,
-            }}
-          >
-            {placeholderCircles.map((op, i) => (
-              <div
-                key={i}
-                style={{
-                  width: 60,
-                  height: 60,
-                  borderRadius: "50%",
-                  border: "2px solid #FF8300",
-                  opacity: op,
-                }}
-              />
-            ))}
-          </div>
-        </>
+        <div
+          style={{
+            position: "absolute",
+            left: 0, right: 0, top: 490,
+            textAlign: "center",
+            fontFamily,
+            fontSize: 64,
+            fontWeight: 900,
+            color: "#FF8300",
+            opacity: sectionsOpacity * prevSectionsFadeOp,
+            transform: `scale(${sectionsScale}) translate(${sectionsMoveX}px, ${sectionsMoveY}px)`,
+          }}
+        >
+          4 Sections
+        </div>
       )}
 
       {/* ── PHASE 5: section cards ── */}
       {sec1Visible && (
-        <div style={{ position: "absolute", left: cardPositions[0], top: 420, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <LightbulbSVG progress={sec1DrawProg} />
-          <div style={{ fontFamily, fontSize: 40, fontWeight: 700, color: "#FFFFFF", opacity: sec1LabelOp, transform: `translateY(${sec1LabelY}px)` }}>
+        <div style={{
+          position: "absolute",
+          left: mindsetX,
+          top: mindsetY,
+          opacity: mindsetEnterOp * prevSectionsFadeOp,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}>
+          <MindsetIllustration width={mindsetW} startFrame={667} />
+          <div style={{
+            fontFamily,
+            fontSize: 40,
+            fontWeight: 700,
+            color: "#1A1A1A",
+            opacity: mindsetTextOp,
+            whiteSpace: "nowrap",
+          }}>
             Mindset
           </div>
         </div>
       )}
 
       {sec2Visible && (
-        <div style={{ position: "absolute", left: cardPositions[1], top: 430, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <SixDotsSVG scale={sec2Scale} />
-          <div style={{ fontFamily, fontSize: 40, fontWeight: 700, color: "#FFFFFF", opacity: sec2LabelOp, transform: `translateY(${sec2LabelY}px)` }}>
+        <div style={{
+          position: "absolute",
+          left: methodX,
+          top: methodY,
+          opacity: methodEnterOp * prevSectionsFadeOp,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}>
+          <MethodIllustration width={methodW} startFrame={799} />
+          <div style={{
+            fontFamily,
+            fontSize: 40,
+            fontWeight: 700,
+            color: "#1A1A1A",
+            opacity: methodTextOp,
+            whiteSpace: "nowrap",
+          }}>
             Method
           </div>
         </div>
       )}
 
       {sec3Visible && (
-        <div style={{ position: "absolute", left: cardPositions[2], top: 420, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <WrenchSVG progress={sec3DrawProg} />
-          <div style={{ fontFamily, fontSize: 40, fontWeight: 700, color: "#FFFFFF", opacity: sec3LabelOp, transform: `translateY(${sec3LabelY}px)` }}>
+        <div style={{
+          position: "absolute",
+          left: toolkitX,
+          top: toolkitY,
+          opacity: toolkitEnterOp * prevSectionsFadeOp,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 12,
+        }}>
+          <ToolkitIllustration width={toolkitW} startFrame={962} />
+          <div style={{
+            fontFamily,
+            fontSize: 40,
+            fontWeight: 700,
+            color: "#1A1A1A",
+            opacity: toolkitTextOp,
+            whiteSpace: "nowrap",
+          }}>
             Toolkit
           </div>
         </div>
       )}
 
       {sec4Visible && (
-        <div style={{ position: "absolute", left: cardPositions[3], top: 420, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-          <BriefcaseSVG progress={sec4DrawProg} />
-          <div style={{ fontFamily, fontSize: 40, fontWeight: 700, color: "#FFFFFF", opacity: sec4LabelOp, transform: `translateY(${sec4LabelY}px)` }}>
+        <div style={{
+          position: "absolute",
+          left: 960 - rcContainerSize / 2,
+          top: 470 - rcContainerSize / 2,
+          opacity: rcEnterOp,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 20,
+          transform: `scale(${rcScale})`,
+          transformOrigin: `${rcContainerSize / 2}px ${rcContainerSize / 2}px`,
+        }}>
+          <div style={{ position: "relative", width: rcContainerSize, height: rcContainerSize }}>
+            {/* Dashed triangle lines + guide circle */}
+            <svg width={rcContainerSize} height={rcContainerSize} style={{ position: "absolute", top: 0, left: 0 }}>
+              {([0, 1, 2] as const).map(i => (
+                <line key={i}
+                  x1={rcPoints[i].x} y1={rcPoints[i].y}
+                  x2={rcPoints[(i + 1) % 3].x} y2={rcPoints[(i + 1) % 3].y}
+                  stroke="#FF8300" strokeWidth={2} strokeDasharray="8 5" opacity={0.8} />
+              ))}
+              <circle cx={rcCx} cy={rcCy} r={rcRadius}
+                fill="none" stroke="#FF8300" strokeWidth={1.5} strokeDasharray="5 7" opacity={0.25} />
+            </svg>
+            {/* Mindset thumbnail */}
+            <div style={{
+              position: "absolute",
+              left: rcPoints[0].x - rcAssetW / 2,
+              top: rcPoints[0].y - rcAssetW / 2,
+              width: rcAssetW, height: rcAssetW,
+              borderRadius: "50%", overflow: "hidden", background: "#EAEDF5",
+            }}>
+              <MindsetIllustration width={rcAssetW} startFrame={667} />
+            </div>
+            {/* Method thumbnail */}
+            <div style={{
+              position: "absolute",
+              left: rcPoints[1].x - rcAssetW / 2,
+              top: rcPoints[1].y - rcAssetW / 2,
+              width: rcAssetW, height: rcAssetW,
+              borderRadius: "50%", overflow: "hidden", background: "#EAEDF5",
+            }}>
+              <MethodIllustration width={rcAssetW} startFrame={799} />
+            </div>
+            {/* Toolkit thumbnail */}
+            <div style={{
+              position: "absolute",
+              left: rcPoints[2].x - rcAssetW / 2,
+              top: rcPoints[2].y - rcAssetW / 2,
+              width: rcAssetW, height: rcAssetW,
+              borderRadius: "50%", overflow: "hidden", background: "#EAEDF5",
+            }}>
+              <ToolkitIllustration width={rcAssetW} startFrame={962} />
+            </div>
+          </div>
+          <div style={{
+            fontFamily,
+            fontSize: 48,
+            fontWeight: 800,
+            color: "#FF8300",
+            opacity: rcTextOp,
+            whiteSpace: "nowrap",
+            letterSpacing: 2,
+          }}>
             Real Case
           </div>
         </div>
       )}
 
-      {/* ── PHASE 6 ── */}
+      {/* ── PHASE 6 — "Let's start!" per-character drop-in ── */}
       {frame >= 1268 && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: 780,
-              transform: "translateX(-50%)",
-              width: lineWidth,
-              height: 2,
-              background: "#FF8300",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: 0, right: 0, top: 810,
-              textAlign: "center",
-              fontFamily,
-              fontSize: 36,
-              fontWeight: 300,
-              color: "#53575A",
-              opacity: beginOpacity,
-            }}
-          >
-            Let's Begin
-          </div>
-        </>
+        <div style={{
+          position: "absolute",
+          left: 0, right: 0,
+          top: 400,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-start",
+          fontFamily,
+          fontSize: 140,
+          fontWeight: 900,
+          lineHeight: 1,
+        }}>
+          {letsStartChars.map((char, i) => {
+            const cf = frame - (1268 + letsStartDelays[i]);
+            const sp6 = spring({ frame: cf, fps, config: { damping: 12, stiffness: 180 } });
+            const y = interpolate(sp6, [0, 1], [-80, 0]);
+            const op = interpolate(cf, [0, 4], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            return (
+              <span key={i} style={{
+                display: "inline-block",
+                transform: `translateY(${y}px)`,
+                opacity: op,
+                color: char === "!" ? "#FF8300" : "#1A1A1A",
+              }}>
+                {char === " " ? " " : char}
+              </span>
+            );
+          })}
+        </div>
       )}
 
       <Subtitle frame={frame} />
